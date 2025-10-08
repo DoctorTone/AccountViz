@@ -1,0 +1,37 @@
+html,
+body,
+#root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  color: black;
+}
+body {
+  background: black;
+}
+.panel {
+  position: absolute;
+  z-index: 100;
+}
+#menu {
+  left: 2%;
+  top: 5%;
+}
+#settings {
+  bottom: 5%;
+  left: 2%;
+}
+.w-100 {
+  width: 100%;
+}
+.w-90 {
+  width: 100%;
+}
+#leva__root {
+  top: 10px;
+  left: 10px;
+  position: fixed;
+}
