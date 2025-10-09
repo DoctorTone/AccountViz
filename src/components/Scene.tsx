@@ -1,7 +1,5 @@
-import { Box } from "@react-three/drei";
-
 const Scene = () => {
-  return <Box />;
+  return null;
 };
 
 export default Scene;

@@ -16,6 +16,12 @@ body {
   position: absolute;
   z-index: 100;
 }
+.w-100 {
+  width: 100%;
+}
+.w-90 {
+  width: 100%;
+}
 #menu {
   left: 2%;
   top: 5%;
@@ -24,14 +30,21 @@ body {
   bottom: 5%;
   left: 2%;
 }
-.w-100 {
-  width: 100%;
-}
-.w-90 {
-  width: 100%;
-}
 #leva__root {
   top: 10px;
   left: 10px;
   position: fixed;
+}
+#dropZone {
+  top: 20%;
+  left: 30%;
+  width: 40%;
+  height: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
+  border: 3px solid #837d7d;
+  border-radius: 20px;
+  cursor: pointer;
 }
