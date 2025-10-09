@@ -48,3 +48,6 @@ body {
   border-radius: 20px;
   cursor: pointer;
 }
+#fileInput {
+  display: none;
+}
