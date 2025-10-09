@@ -1,8 +1,7 @@
-import { useEffect } from "react";
 import Typography from "@mui/material/Typography";
 
 const DropZone = () => {
-  const handleDrop = (event) => {
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const droppedFiles = event.dataTransfer.files;
     if (droppedFiles.length > 0) {
