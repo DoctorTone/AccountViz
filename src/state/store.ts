@@ -10,11 +10,15 @@ type DataRow = {
 };
 
 interface DataState {
+  dataLoaded: boolean;
+  setDataLoaded: (status: boolean) => void;
   rows: DataRow[];
   loadCSVFile: (file: File) => void;
 }
 
 const useStore = create<DataState>((set) => ({
+  dataLoaded: false,
+  setDataLoaded: (status) => set({ dataLoaded: status }),
   rows: [],
   loadCSVFile: (file) => {
     Papa.parse<string[]>(file, {
@@ -30,7 +34,7 @@ const useStore = create<DataState>((set) => ({
           description: row[8],
         }));
 
-        set((state) => ({ rows: state.rows.concat(temp) }));
+        set((state) => ({ rows: state.rows.concat(temp), dataLoaded: true }));
       },
     });
   },
