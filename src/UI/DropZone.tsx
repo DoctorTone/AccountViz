@@ -1,12 +1,15 @@
 import Typography from "@mui/material/Typography";
+import useStore from "../state/store";
 
 const DropZone = () => {
+  const loadCSVFile = useStore((state) => state.loadCSVFile);
+
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const droppedFiles = event.dataTransfer.files;
     if (droppedFiles.length > 0) {
       const newFiles = Array.from(droppedFiles);
-      console.log("new files = ", newFiles[0]);
+      loadCSVFile(newFiles[0]);
     }
   };
 
