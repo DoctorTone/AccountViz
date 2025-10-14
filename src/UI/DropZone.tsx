@@ -3,6 +3,7 @@ import useStore from "../state/store";
 
 const DropZone = () => {
   const loadCSVFile = useStore((state) => state.loadCSVFile);
+  const showDropZone = useStore((state) => state.showDropZone);
 
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -14,15 +15,19 @@ const DropZone = () => {
   };
 
   return (
-    <div
-      id="dropZone"
-      className="panel"
-      onDrop={handleDrop}
-      onDragOver={(event) => event.preventDefault()}
-    >
-      <Typography variant="h5">Drag your file here.</Typography>
-      <input type="file" id="fileInput" accept=".csv" />
-    </div>
+    <>
+      {showDropZone && (
+        <div
+          id="dropZone"
+          className="panel"
+          onDrop={handleDrop}
+          onDragOver={(event) => event.preventDefault()}
+        >
+          <Typography variant="h5">Drag your file here.</Typography>
+          <input type="file" id="fileInput" accept=".csv" />
+        </div>
+      )}
+    </>
   );
 };
 

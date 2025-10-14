@@ -10,6 +10,7 @@ type DataRow = {
 };
 
 interface DataState {
+  showDropZone: boolean;
   dataLoaded: boolean;
   visualisationEnabled: boolean;
   setDataLoaded: (status: boolean) => void;
@@ -20,6 +21,7 @@ interface DataState {
 }
 
 const useStore = create<DataState>((set) => ({
+  showDropZone: true,
   dataLoaded: false,
   setDataLoaded: (status) => set({ dataLoaded: status }),
   rows: [],
@@ -57,7 +59,11 @@ const useStore = create<DataState>((set) => ({
     });
   },
   saveSelectedRows: (data) =>
-    set(() => ({ selectedRows: data, visualisationEnabled: true })),
+    set(() => ({
+      selectedRows: data,
+      visualisationEnabled: true,
+      showDropZone: false,
+    })),
 }));
 
 export default useStore;
