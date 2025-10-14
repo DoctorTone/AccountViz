@@ -11,6 +11,7 @@ type DataRow = {
 
 interface DataState {
   dataLoaded: boolean;
+  visualisationEnabled: boolean;
   setDataLoaded: (status: boolean) => void;
   rows: DataRow[];
   selectedRows: DataRow[];
@@ -23,6 +24,7 @@ const useStore = create<DataState>((set) => ({
   setDataLoaded: (status) => set({ dataLoaded: status }),
   rows: [],
   selectedRows: [],
+  visualisationEnabled: false,
   loadCSVFile: (file) => {
     Papa.parse<string[]>(file, {
       skipEmptyLines: true,
@@ -54,7 +56,8 @@ const useStore = create<DataState>((set) => ({
       },
     });
   },
-  saveSelectedRows: (data) => set(() => ({ selectedRows: data })),
+  saveSelectedRows: (data) =>
+    set(() => ({ selectedRows: data, visualisationEnabled: true })),
 }));
 
 export default useStore;

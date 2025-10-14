@@ -5,6 +5,7 @@ import { CAMERA } from "./state/Config";
 import Scene from "./components/Scene";
 import SceneHelpers from "./components/SceneHelpers";
 import UI from "./UI/UI";
+import Lights from "./components/Lights";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         }}
       >
         <DaySky />
+        <Lights />
         <Scene />
         <SceneHelpers />
         <OrbitControls
