@@ -3,7 +3,11 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
-import { DataGrid, type GridColDef } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  type GridColDef,
+  type GridRowSelectionModel,
+} from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 import useStore from "../state/store";
 
@@ -35,6 +39,24 @@ const DataDialog = () => {
 
   const paginationModel = { page: 0, pageSize: 5 };
 
+  const rowSelected = (newSelection: GridRowSelectionModel) => {
+    const values = Array.from(newSelection.ids);
+    let inComing = 0;
+    let outGoing = 0;
+
+    for (let i = 0; i < values.length; ++i) {
+      const row = rows[values[i] - 1];
+      if (row.amount < 0) {
+        outGoing += row.amount;
+      } else {
+        inComing += row.amount;
+      }
+    }
+
+    console.log("Outgoings = ", outGoing);
+    console.log("Incomings = ", inComing);
+  };
+
   return (
     <Dialog
       onClose={handleClose}
@@ -51,6 +73,7 @@ const DataDialog = () => {
             initialState={{ pagination: { paginationModel } }}
             pageSizeOptions={[5, 10]}
             checkboxSelection
+            onRowSelectionModelChange={rowSelected}
             sx={{ border: 0 }}
           />
         </Paper>
