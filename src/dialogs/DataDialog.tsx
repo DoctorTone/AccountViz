@@ -19,7 +19,7 @@ const DataDialog = () => {
   const columns: GridColDef[] = [
     { field: "id", headerName: "ID", width: 70 },
     { field: "date", headerName: "Date", width: 130 },
-    { field: "type", headerName: "Type", width: 130 },
+    { field: "transaction", headerName: "Type", width: 130 },
     {
       field: "amount",
       headerName: "Amount",

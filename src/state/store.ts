@@ -26,15 +26,28 @@ const useStore = create<DataState>((set) => ({
       complete: (results) => {
         const data = results.data;
 
-        const temp: DataRow[] = data.map((row, index) => ({
-          id: index + 1,
-          date: row[0],
-          transaction: row[6],
-          amount: parseFloat(row[7]),
-          description: row[8],
-        }));
+        const temp: DataRow[] = data.map((row, index) => {
+          // Convert to ISO date
+          const year = row[0].slice(0, 4);
+          const month = row[0].slice(4, 6);
+          const day = row[0].slice(6);
+
+          console.log("Date = ", year, month, day);
+
+          return {
+            id: index + 1,
+            date: new Date(`${year}-${month}-${day}`)
+              .toUTCString()
+              .slice(0, -13),
+            transaction: row[6],
+            amount: parseFloat(row[7]),
+            description: row[8],
+          };
+        });
 
         set((state) => ({ rows: state.rows.concat(temp), dataLoaded: true }));
+        // DEBUG
+        console.log("Data", data);
       },
     });
   },
