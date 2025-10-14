@@ -13,13 +13,16 @@ interface DataState {
   dataLoaded: boolean;
   setDataLoaded: (status: boolean) => void;
   rows: DataRow[];
+  selectedRows: DataRow[];
   loadCSVFile: (file: File) => void;
+  saveSelectedRows: (data: DataRow[]) => void;
 }
 
 const useStore = create<DataState>((set) => ({
   dataLoaded: false,
   setDataLoaded: (status) => set({ dataLoaded: status }),
   rows: [],
+  selectedRows: [],
   loadCSVFile: (file) => {
     Papa.parse<string[]>(file, {
       skipEmptyLines: true,
@@ -51,6 +54,7 @@ const useStore = create<DataState>((set) => ({
       },
     });
   },
+  saveSelectedRows: (data) => set(() => ({ selectedRows: data })),
 }));
 
 export default useStore;

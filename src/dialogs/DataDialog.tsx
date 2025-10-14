@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -12,12 +13,23 @@ import Paper from "@mui/material/Paper";
 import useStore from "../state/store";
 
 const DataDialog = () => {
+  const [selectionModel, setSelectionModel] = useState<GridRowSelectionModel>();
   const dataLoaded = useStore((state) => state.dataLoaded);
   const setDataLoaded = useStore((state) => state.setDataLoaded);
   const rows = useStore((state) => state.rows);
+  const saveSelectedRows = useStore((state) => state.saveSelectedRows);
 
   const handleClose = () => {
     setDataLoaded(false);
+    if (selectionModel) {
+      const selectedRows = Array.from(selectionModel.ids);
+      const selectedData = [];
+      for (let i = 0; i < selectedRows.length; ++i) {
+        const row = selectedRows[i] - 1;
+        selectedData.push(rows[row]);
+      }
+      saveSelectedRows(selectedData);
+    }
   };
 
   const columns: GridColDef[] = [
@@ -40,21 +52,7 @@ const DataDialog = () => {
   const paginationModel = { page: 0, pageSize: 5 };
 
   const rowSelected = (newSelection: GridRowSelectionModel) => {
-    const values = Array.from(newSelection.ids);
-    let inComing = 0;
-    let outGoing = 0;
-
-    for (let i = 0; i < values.length; ++i) {
-      const row = rows[values[i] - 1];
-      if (row.amount < 0) {
-        outGoing += row.amount;
-      } else {
-        inComing += row.amount;
-      }
-    }
-
-    console.log("Outgoings = ", outGoing);
-    console.log("Incomings = ", inComing);
+    setSelectionModel(newSelection);
   };
 
   return (
