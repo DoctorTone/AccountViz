@@ -39,8 +39,6 @@ const useStore = create<DataState>((set) => ({
           const month = row[0].slice(4, 6);
           const day = row[0].slice(6);
 
-          console.log("Date = ", year, month, day);
-
           return {
             id: index + 1,
             date: new Date(`${year}-${month}-${day}`)
@@ -53,8 +51,6 @@ const useStore = create<DataState>((set) => ({
         });
 
         set((state) => ({ rows: state.rows.concat(temp), dataLoaded: true }));
-        // DEBUG
-        console.log("Data", data);
       },
     });
   },
