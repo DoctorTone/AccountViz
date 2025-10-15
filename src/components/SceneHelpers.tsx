@@ -1,4 +1,5 @@
 import { GizmoHelper, GizmoViewport, Grid } from "@react-three/drei";
+import { GRID } from "../state/Config";
 
 const SceneHelpers = () => {
   return (
@@ -9,7 +10,7 @@ const SceneHelpers = () => {
           labelColor="white"
         />
       </GizmoHelper>
-      <Grid position={[0, 0, 0]} args={[10.5, 10.5]} />
+      <Grid position={[0, 0, 0]} args={[GRID.WIDTH, GRID.HEIGHT]} />
     </>
   );
 };

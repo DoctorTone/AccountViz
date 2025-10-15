@@ -5,3 +5,8 @@ export const CAMERA = {
   NEAR: 0.01,
   FAR: 1000,
 };
+
+export const GRID = {
+  WIDTH: 35,
+  HEIGHT: 20,
+};
