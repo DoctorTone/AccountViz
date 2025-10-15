@@ -1,12 +1,16 @@
 import { create } from "zustand";
 import Papa from "papaparse";
 
+type Expenses = "Misc" | "Accountants" | "Consumables" | "Web hosting";
+
 type DataRow = {
   id: number;
   date: string;
   transaction: string;
   amount: number;
   description: string;
+  vat: boolean;
+  category: Expenses;
 };
 
 interface DataState {
@@ -47,6 +51,8 @@ const useStore = create<DataState>((set) => ({
             transaction: row[6],
             amount: parseFloat(row[7]),
             description: row[8],
+            vat: false,
+            category: "Misc",
           };
         });
 

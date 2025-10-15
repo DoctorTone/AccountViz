@@ -64,6 +64,8 @@ const DataDialog = () => {
   const paginationModel = { page: 0, pageSize: 5 };
 
   const rowSelected = (newSelection: GridRowSelectionModel) => {
+    // DEBUG
+    console.log("New select = ", newSelection);
     setSelectionModel(newSelection);
   };
 

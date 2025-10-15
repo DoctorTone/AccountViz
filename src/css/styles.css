@@ -51,3 +51,7 @@ body {
 #fileInput {
   display: none;
 }
+#views {
+  top: 2%;
+  left: 2%;
+}
