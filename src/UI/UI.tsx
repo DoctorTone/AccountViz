@@ -8,7 +8,7 @@ const UI = () => {
   return (
     <>
       <DropZone />
-      <Options />
+      {/* <Options /> */}
       <Settings />
       <DataDialog />
       <div style={{ position: "fixed", top: 10, left: 10 }}>

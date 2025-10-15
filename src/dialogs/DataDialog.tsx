@@ -25,7 +25,7 @@ const DataDialog = () => {
       const selectedRows = Array.from(selectionModel.ids);
       const selectedData = [];
       for (let i = 0; i < selectedRows.length; ++i) {
-        const row = selectedRows[i] - 1;
+        const row = (selectedRows[i] as number) - 1;
         selectedData.push(rows[row]);
       }
       saveSelectedRows(selectedData);
@@ -46,6 +46,17 @@ const DataDialog = () => {
       field: "description",
       headerName: "Description",
       width: 160,
+    },
+    {
+      field: "vat",
+      headerName: "VAT",
+      width: 50,
+      valueGetter: () => "Hello",
+    },
+    {
+      field: "category",
+      headerName: "Category",
+      width: 75,
     },
   ];
 
@@ -78,7 +89,7 @@ const DataDialog = () => {
       </DialogContent>
       <DialogActions>
         <Button variant="outlined" onClick={handleClose}>
-          OK
+          Visualise
         </Button>
       </DialogActions>
     </Dialog>

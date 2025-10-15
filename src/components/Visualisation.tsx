@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useThree, useFrame } from "@react-three/fiber";
+// import { useThree, useFrame } from "@react-three/fiber";
 import useStore from "../state/store";
 
 const RADIUS = 0.5;
@@ -7,7 +7,7 @@ const Visualisation = () => {
   const [outGoings, setOut] = useState(0);
   const [inComings, setIn] = useState(0);
   const selectedRows = useStore((state) => state.selectedRows);
-  const { camera } = useThree();
+  // const { camera } = useThree();
 
   useEffect(() => {
     if (!selectedRows.length) return;
@@ -28,17 +28,18 @@ const Visualisation = () => {
     setIn(totalIn);
   }, [selectedRows]);
 
-  useFrame(() => {
-    // DEBUG
-    console.log("Cam = ", camera.position);
-  });
+  // useFrame(() => {
+  //   // DEBUG
+  //   console.log("Cam = ", camera.position);
+  // });
+
   return (
     <>
-      <mesh position={[-2, 5, 0]}>
+      <mesh position={[2, 5, 0]}>
         <cylinderGeometry args={[RADIUS, RADIUS, 10]} />
         <meshStandardMaterial color="green" />
       </mesh>
-      <mesh position={[2, outGoings / 20, 0]}>
+      <mesh position={[-2, outGoings / 20, 0]}>
         <cylinderGeometry args={[RADIUS, RADIUS, outGoings / 10]} />
         <meshStandardMaterial color="red" />
       </mesh>
