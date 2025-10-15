@@ -11,6 +11,7 @@ import {
 } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 import useStore from "../state/store";
+import Checkbox from "@mui/material/Checkbox";
 
 const DataDialog = () => {
   const [selectionModel, setSelectionModel] = useState<GridRowSelectionModel>();
@@ -50,8 +51,8 @@ const DataDialog = () => {
     {
       field: "vat",
       headerName: "VAT",
-      width: 50,
-      valueGetter: () => "Hello",
+      width: 75,
+      renderCell: () => <Checkbox />,
     },
     {
       field: "category",
@@ -77,6 +78,7 @@ const DataDialog = () => {
       <DialogContent dividers>
         <Paper sx={{ height: 400, width: "100%" }}>
           <DataGrid
+            disableRowSelectionOnClick
             rows={rows}
             columns={columns}
             initialState={{ pagination: { paginationModel } }}
