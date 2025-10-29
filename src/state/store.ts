@@ -21,6 +21,8 @@ interface DataState {
   rows: DataRow[];
   selectedRows: DataRow[];
   loadCSVFile: (file: File) => void;
+  setRows: (data: DataRow[]) => void;
+  updateRow: (row: DataRow) => void;
   saveSelectedRows: (data: DataRow[]) => void;
 }
 
@@ -60,6 +62,13 @@ const useStore = create<DataState>((set) => ({
       },
     });
   },
+  setRows: (data) => set(() => ({ rows: data })),
+  updateRow: (row) =>
+    set((state) => ({
+      rows: state.rows.map((currentRow) =>
+        currentRow.id === row.id ? { ...currentRow, ...row } : currentRow
+      ),
+    })),
   saveSelectedRows: (data) =>
     set(() => ({
       selectedRows: data,

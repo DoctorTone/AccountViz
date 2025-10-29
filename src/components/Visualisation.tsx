@@ -37,8 +37,8 @@ const Visualisation = () => {
 
   return (
     <>
-      <mesh position={[2, 5, 0]}>
-        <cylinderGeometry args={[RADIUS, RADIUS, 10]} />
+      <mesh position={[2, inComings / 20, 0]}>
+        <cylinderGeometry args={[RADIUS, RADIUS, inComings / 10]} />
         <meshStandardMaterial color="green" />
       </mesh>
       <mesh position={[-2, outGoings / 20, 0]}>

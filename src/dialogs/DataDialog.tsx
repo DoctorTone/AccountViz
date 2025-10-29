@@ -8,29 +8,53 @@ import {
   DataGrid,
   type GridColDef,
   type GridRowSelectionModel,
+  type GridEditSingleSelectCellProps,
+  GridEditSingleSelectCell,
+  useGridApiContext,
 } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 import useStore from "../state/store";
 import Checkbox from "@mui/material/Checkbox";
 
 const DataDialog = () => {
-  const [selectionModel, setSelectionModel] = useState<GridRowSelectionModel>();
+  const [selection, setSelection] = useState<GridRowSelectionModel>();
   const dataLoaded = useStore((state) => state.dataLoaded);
   const setDataLoaded = useStore((state) => state.setDataLoaded);
   const rows = useStore((state) => state.rows);
+  const updateRow = useStore((state) => state.updateRow);
   const saveSelectedRows = useStore((state) => state.saveSelectedRows);
 
   const handleClose = () => {
-    setDataLoaded(false);
-    if (selectionModel) {
-      const selectedRows = Array.from(selectionModel.ids);
-      const selectedData = [];
-      for (let i = 0; i < selectedRows.length; ++i) {
-        const row = (selectedRows[i] as number) - 1;
-        selectedData.push(rows[row]);
-      }
-      saveSelectedRows(selectedData);
+    if (!selection) {
+      // DEBUG
+      console.log("No data selected!");
+      return;
     }
+    setDataLoaded(false);
+    const selected = Array.from(selection.ids);
+    const selectedRows = rows.filter((row) => selected!.includes(row.id));
+    saveSelectedRows(selectedRows);
+  };
+
+  const CustomTypeEditComponent = (params: GridEditSingleSelectCellProps) => {
+    const apiRef = useGridApiContext();
+
+    const handleValueChange = async (event: any, newValue: string) => {
+      await apiRef.current.setEditCellValue(
+        {
+          id: params.id,
+          field: params.field,
+          value: newValue,
+        },
+        event
+      );
+      // Commit cell
+      apiRef.current.stopCellEditMode({ id: params.id, field: params.field });
+    };
+
+    return (
+      <GridEditSingleSelectCell onValueChange={handleValueChange} {...params} />
+    );
   };
 
   const columns: GridColDef[] = [
@@ -57,23 +81,32 @@ const DataDialog = () => {
     {
       field: "category",
       headerName: "Category",
-      width: 75,
+      width: 200,
+      editable: true,
+      type: "singleSelect",
+      valueOptions: ["Misc", "Consumables", "Web hosting"],
+      renderEditCell: (params) => <CustomTypeEditComponent {...params} />,
     },
   ];
 
   const paginationModel = { page: 0, pageSize: 5 };
 
-  const rowSelected = (newSelection: GridRowSelectionModel) => {
+  const rowUpdate = (newRow: any, oldRow: any) => {
     // DEBUG
-    console.log("New select = ", newSelection);
-    setSelectionModel(newSelection);
+    console.log("Row updated");
+    updateRow(newRow);
+    return newRow;
+  };
+
+  const handleSelectionChange = (model: GridRowSelectionModel) => {
+    setSelection(model);
   };
 
   return (
     <Dialog
       onClose={handleClose}
       open={dataLoaded}
-      maxWidth={"md"}
+      maxWidth={"lg"}
       fullWidth={true}
     >
       <DialogTitle>Accounts Data</DialogTitle>
@@ -82,12 +115,15 @@ const DataDialog = () => {
           <DataGrid
             disableRowSelectionOnClick
             rows={rows}
+            editMode="cell"
             columns={columns}
             initialState={{ pagination: { paginationModel } }}
             pageSizeOptions={[5, 10]}
+            processRowUpdate={rowUpdate}
+            onProcessRowUpdateError={(err) => console.error(err)}
             checkboxSelection
-            onRowSelectionModelChange={rowSelected}
-            sx={{ border: 0 }}
+            onRowSelectionModelChange={handleSelectionChange}
+            rowSelectionModel={selection}
           />
         </Paper>
       </DialogContent>
