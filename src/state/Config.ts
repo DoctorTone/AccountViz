@@ -10,3 +10,5 @@ export const GRID = {
   WIDTH: 35,
   HEIGHT: 20,
 };
+
+export type VizType = "Incomings" | "Transaction" | "Categories";

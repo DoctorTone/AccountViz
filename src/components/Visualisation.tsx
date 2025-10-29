@@ -11,8 +11,6 @@ const Visualisation = () => {
 
   useEffect(() => {
     if (!selectedRows.length) return;
-    // DEBUG
-    console.log("Selected = ", selectedRows);
 
     let totalIn = 0;
     let totalOut = 0;

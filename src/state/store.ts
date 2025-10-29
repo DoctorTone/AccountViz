@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import Papa from "papaparse";
+import { type VizType } from "./Config";
 
 type Expenses = "Misc" | "Accountants" | "Consumables" | "Web hosting";
 
@@ -24,6 +25,8 @@ interface DataState {
   setRows: (data: DataRow[]) => void;
   updateRow: (row: DataRow) => void;
   saveSelectedRows: (data: DataRow[]) => void;
+  vizType: VizType;
+  setVisualisationType: (vizType: VizType) => void;
 }
 
 const useStore = create<DataState>((set) => ({
@@ -75,6 +78,9 @@ const useStore = create<DataState>((set) => ({
       visualisationEnabled: true,
       showDropZone: false,
     })),
+  vizType: "Incomings",
+  setVisualisationType: (visualisationType) =>
+    set(() => ({ vizType: visualisationType })),
 }));
 
 export default useStore;
