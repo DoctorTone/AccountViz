@@ -19,7 +19,7 @@ export const BarChart = ({ data }: BarChartProps) => {
     <>
       {Object.entries(totalsOut).map(([_, value], index) => {
         return (
-          <Cylinder position-x={index * 2} args={[1, 1, -value]}>
+          <Cylinder position={[index * 4, -value / 2, 0]} args={[1, 1, -value]}>
             <meshStandardMaterial color={"red"} />
           </Cylinder>
         );
