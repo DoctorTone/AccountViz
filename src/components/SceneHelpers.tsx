@@ -1,6 +1,12 @@
 import { GizmoHelper, GizmoViewport, Grid } from "@react-three/drei";
 import { GRID } from "../state/Config";
 
+const gridConfig = {
+  cellColor: "#ababab",
+  sectionColor: "#555555",
+  cellThickness: 1,
+};
+
 const SceneHelpers = () => {
   return (
     <>
@@ -10,7 +16,11 @@ const SceneHelpers = () => {
           labelColor="white"
         />
       </GizmoHelper>
-      <Grid position={[0, 0, 0]} args={[GRID.WIDTH, GRID.HEIGHT]} />
+      <Grid
+        position={[0, 0, 0]}
+        args={[GRID.WIDTH, GRID.HEIGHT]}
+        {...gridConfig}
+      />
     </>
   );
 };

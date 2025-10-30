@@ -15,16 +15,16 @@ const Visualisation = () => {
       case "Incomings":
         {
           const totals = {
-            in: 0,
-            out: 0,
+            Incoming: 0,
+            Outgoing: 0,
           };
 
           for (let i = 0; i < selectedRows.length; ++i) {
             const amount = selectedRows[i].amount;
             if (amount < 0) {
-              totals.out += amount;
+              totals.Outgoing += amount;
             } else {
-              totals.in += amount;
+              totals.Incoming += amount;
             }
           }
 

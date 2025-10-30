@@ -7,12 +7,13 @@ export const CAMERA = {
 };
 
 export const GRID = {
-  WIDTH: 35,
-  HEIGHT: 20,
+  WIDTH: 90,
+  HEIGHT: 30,
 };
 
 export const BAR_CHART = {
   OUTGOING_START: -1,
+  INCOMING_START: 1,
   MAX_HEIGHT: 10,
   GAP: 4,
   RADIUS: 0.5,
@@ -20,3 +21,13 @@ export const BAR_CHART = {
 };
 
 export type VizType = "Incomings" | "Transaction" | "Categories";
+
+export const ExpensesList = [
+  "Misc",
+  "Accountants",
+  "Consumables",
+  "Web hosting",
+  "Subscriptions",
+  "Training material",
+  "Computer equipment",
+];

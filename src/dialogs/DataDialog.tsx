@@ -15,6 +15,7 @@ import {
 import Paper from "@mui/material/Paper";
 import useStore from "../state/store";
 import Checkbox from "@mui/material/Checkbox";
+import { ExpensesList } from "../state/Config";
 
 const DataDialog = () => {
   const [selection, setSelection] = useState<GridRowSelectionModel>();
@@ -84,7 +85,7 @@ const DataDialog = () => {
       width: 200,
       editable: true,
       type: "singleSelect",
-      valueOptions: ["Misc", "Accountants", "Consumables", "Web hosting"],
+      valueOptions: ExpensesList,
       renderEditCell: (params) => <CustomTypeEditComponent {...params} />,
     },
   ];
