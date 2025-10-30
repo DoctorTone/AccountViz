@@ -22,7 +22,7 @@ export const BAR_CHART = {
 
 export const gridConfig = {
   cellColor: "#ababab",
-  sectionColor: "#555555",
+  sectionColor: "#999",
   cellThickness: 1,
 };
 
