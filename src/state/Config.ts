@@ -11,4 +11,10 @@ export const GRID = {
   HEIGHT: 20,
 };
 
+export const BAR_CHART = {
+  MAX_HEIGHT: 10,
+  GAP: 4,
+  RADIUS: 0.5,
+};
+
 export type VizType = "Incomings" | "Transaction" | "Categories";

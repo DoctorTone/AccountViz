@@ -1,4 +1,5 @@
 import { Cylinder } from "@react-three/drei";
+import { BAR_CHART } from "../state/Config";
 
 type CategoryTotals = {
   [key: string]: number;
@@ -16,17 +17,18 @@ export const BarChart = ({ data }: BarChartProps) => {
   // Get max (of negative values)
   const values = Object.values(totalsOut);
   const max = Math.min(...values) * -1;
-  const scale = max / 10;
+  const scale = max / BAR_CHART.MAX_HEIGHT;
   // DEBUG
   console.log("Totals = ", totalsOut);
   console.log("Max = ", max);
   return (
     <>
-      {Object.entries(totalsOut).map(([_, value], index) => {
+      {Object.entries(totalsOut).map(([key, value], index) => {
         return (
           <Cylinder
-            position={[index * 4, -value / scale / 2, 0]}
-            args={[0.5, 0.5, -value / scale]}
+            key={key}
+            position={[index * BAR_CHART.GAP, -value / scale / 2, 0]}
+            args={[BAR_CHART.RADIUS, BAR_CHART.RADIUS, -value / scale]}
           >
             <meshStandardMaterial color={"red"} />
           </Cylinder>
