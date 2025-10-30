@@ -1,49 +1,44 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 // import { useThree, useFrame } from "@react-three/fiber";
 import useStore from "../state/store";
 
 const RADIUS = 0.5;
+const MIN_AMOUNT = 0.1;
 const Visualisation = () => {
   const [outGoings, setOut] = useState(0);
   const [inComings, setIn] = useState(0);
   const selectedRows = useStore((state) => state.selectedRows);
   const vizType = useStore((state) => state.vizType);
-  // const { camera } = useThree();
 
-  useEffect(() => {
-    if (!selectedRows.length) return;
+  if (!selectedRows.length) {
+    return null;
+  }
 
-    // DEBUG
-    console.log("Data = ", selectedRows);
-
+  const categoryTotals = useMemo(() => {
     switch (vizType) {
       case "Incomings":
         {
-          let totalIn = 0;
-          let totalOut = 0;
+          const totals = {
+            in: 0,
+            out: 0,
+          };
 
           for (let i = 0; i < selectedRows.length; ++i) {
             const amount = selectedRows[i].amount;
             if (amount < 0) {
-              totalOut += amount;
+              totals.out += amount;
             } else {
-              totalIn += amount;
+              totals.in += amount;
             }
           }
 
-          setOut(totalOut * -1);
-          setIn(totalIn);
-        }
-        break;
-
-      case "Transaction":
-        {
+          return totals;
         }
         break;
 
       case "Categories":
         {
-          const catTypes = {
+          const totals = {
             Misc: 0,
             Accountants: 0,
             Consumables: 0,
@@ -54,17 +49,10 @@ const Visualisation = () => {
           };
 
           selectedRows.forEach((row) => {
-            catTypes[row.category] += row.amount * -1;
+            totals[row.category] += row.amount;
           });
 
-          const cats = [];
-          for (const [key, value] of Object.entries(catTypes)) {
-            if (value > 0) {
-              cats.push(key);
-            }
-          }
-          // DEBUG
-          console.log("Cats = ", cats);
+          return totals;
         }
         break;
 
@@ -73,16 +61,11 @@ const Visualisation = () => {
     }
   }, [selectedRows, vizType]);
 
-  // useFrame(() => {
-  //   // DEBUG
-  //   console.log("Cam = ", camera.position);
-  // });
-
   return (
     <>
       <mesh position={[2, inComings / 20, 0]}>
         <cylinderGeometry args={[RADIUS, RADIUS, inComings / 10]} />
-        <meshStandardMaterial color="green" />
+        <meshStandardMaterial color="black" />
       </mesh>
       <mesh position={[-2, outGoings / 20, 0]}>
         <cylinderGeometry args={[RADIUS, RADIUS, outGoings / 10]} />
