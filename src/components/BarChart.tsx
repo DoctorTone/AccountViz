@@ -1,4 +1,4 @@
-import { Cylinder } from "@react-three/drei";
+import { Cylinder, Text } from "@react-three/drei";
 import { BAR_CHART } from "../state/Config";
 
 type CategoryTotals = {
@@ -24,14 +24,32 @@ export const BarChart = ({ data }: BarChartProps) => {
   return (
     <>
       {Object.entries(totalsOut).map(([key, value], index) => {
+        const height = -value / scale / 2;
         return (
-          <Cylinder
-            key={key}
-            position={[index * BAR_CHART.GAP, -value / scale / 2, 0]}
-            args={[BAR_CHART.RADIUS, BAR_CHART.RADIUS, -value / scale]}
-          >
-            <meshStandardMaterial color={"red"} />
-          </Cylinder>
+          <>
+            <Cylinder
+              key={key}
+              position={[
+                BAR_CHART.OUTGOING_START + index * -BAR_CHART.GAP,
+                height,
+                0,
+              ]}
+              args={[BAR_CHART.RADIUS, BAR_CHART.RADIUS, -value / scale]}
+            >
+              <meshStandardMaterial color={"red"} />
+            </Cylinder>
+            <Text
+              position={[
+                BAR_CHART.OUTGOING_START + index * -BAR_CHART.GAP,
+                height * 2 + BAR_CHART.TEXT_OFFSET,
+                0,
+              ]}
+              color={"black"}
+              fontSize={0.5}
+            >
+              {key}
+            </Text>
+          </>
         );
       })}
     </>
