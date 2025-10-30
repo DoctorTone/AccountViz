@@ -1,12 +1,8 @@
-import { useEffect, useState, useMemo } from "react";
-// import { useThree, useFrame } from "@react-three/fiber";
+import { useMemo } from "react";
 import useStore from "../state/store";
+import { BarChart } from "./BarChart";
 
-const RADIUS = 0.5;
-const MIN_AMOUNT = 0.1;
 const Visualisation = () => {
-  const [outGoings, setOut] = useState(0);
-  const [inComings, setIn] = useState(0);
   const selectedRows = useStore((state) => state.selectedRows);
   const vizType = useStore((state) => state.vizType);
 
@@ -57,20 +53,14 @@ const Visualisation = () => {
         break;
 
       default:
+        return {};
         break;
     }
   }, [selectedRows, vizType]);
 
   return (
     <>
-      <mesh position={[2, inComings / 20, 0]}>
-        <cylinderGeometry args={[RADIUS, RADIUS, inComings / 10]} />
-        <meshStandardMaterial color="black" />
-      </mesh>
-      <mesh position={[-2, outGoings / 20, 0]}>
-        <cylinderGeometry args={[RADIUS, RADIUS, outGoings / 10]} />
-        <meshStandardMaterial color="red" />
-      </mesh>
+      <BarChart data={categoryTotals} />
     </>
   );
 };
