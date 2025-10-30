@@ -84,7 +84,7 @@ const DataDialog = () => {
       width: 200,
       editable: true,
       type: "singleSelect",
-      valueOptions: ["Misc", "Consumables", "Web hosting"],
+      valueOptions: ["Misc", "Accountants", "Consumables", "Web hosting"],
       renderEditCell: (params) => <CustomTypeEditComponent {...params} />,
     },
   ];

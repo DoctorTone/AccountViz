@@ -2,7 +2,14 @@ import { create } from "zustand";
 import Papa from "papaparse";
 import { type VizType } from "./Config";
 
-type Expenses = "Misc" | "Accountants" | "Consumables" | "Web hosting";
+type Expenses =
+  | "Misc"
+  | "Accountants"
+  | "Consumables"
+  | "Web hosting"
+  | "Subscriptions"
+  | "Training material"
+  | "Computer equipment";
 
 type DataRow = {
   id: number;

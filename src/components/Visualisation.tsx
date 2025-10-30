@@ -7,26 +7,71 @@ const Visualisation = () => {
   const [outGoings, setOut] = useState(0);
   const [inComings, setIn] = useState(0);
   const selectedRows = useStore((state) => state.selectedRows);
+  const vizType = useStore((state) => state.vizType);
   // const { camera } = useThree();
 
   useEffect(() => {
     if (!selectedRows.length) return;
 
-    let totalIn = 0;
-    let totalOut = 0;
+    // DEBUG
+    console.log("Data = ", selectedRows);
 
-    for (let i = 0; i < selectedRows.length; ++i) {
-      const amount = selectedRows[i].amount;
-      if (amount < 0) {
-        totalOut += amount;
-      } else {
-        totalIn += amount;
-      }
+    switch (vizType) {
+      case "Incomings":
+        {
+          let totalIn = 0;
+          let totalOut = 0;
+
+          for (let i = 0; i < selectedRows.length; ++i) {
+            const amount = selectedRows[i].amount;
+            if (amount < 0) {
+              totalOut += amount;
+            } else {
+              totalIn += amount;
+            }
+          }
+
+          setOut(totalOut * -1);
+          setIn(totalIn);
+        }
+        break;
+
+      case "Transaction":
+        {
+        }
+        break;
+
+      case "Categories":
+        {
+          const catTypes = {
+            Misc: 0,
+            Accountants: 0,
+            Consumables: 0,
+            "Web hosting": 0,
+            Subscriptions: 0,
+            "Training material": 0,
+            "Computer equipment": 0,
+          };
+
+          selectedRows.forEach((row) => {
+            catTypes[row.category] += row.amount * -1;
+          });
+
+          const cats = [];
+          for (const [key, value] of Object.entries(catTypes)) {
+            if (value > 0) {
+              cats.push(key);
+            }
+          }
+          // DEBUG
+          console.log("Cats = ", cats);
+        }
+        break;
+
+      default:
+        break;
     }
-
-    setOut(totalOut * -1);
-    setIn(totalIn);
-  }, [selectedRows]);
+  }, [selectedRows, vizType]);
 
   // useFrame(() => {
   //   // DEBUG
