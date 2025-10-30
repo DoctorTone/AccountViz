@@ -56,7 +56,7 @@ export const BarChart = ({ data }: BarChartProps) => {
               color={"black"}
               fontSize={0.5}
             >
-              {key}
+              {`${key} £${-value}`}
             </Text>
           </>
         );

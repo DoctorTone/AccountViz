@@ -20,6 +20,12 @@ export const BAR_CHART = {
   TEXT_OFFSET: 0.5,
 };
 
+export const gridConfig = {
+  cellColor: "#ababab",
+  sectionColor: "#555555",
+  cellThickness: 1,
+};
+
 export type VizType = "Incomings" | "Transaction" | "Categories";
 
 export const ExpensesList = [
