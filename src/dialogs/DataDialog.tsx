@@ -34,6 +34,8 @@ const DataDialog = () => {
     setDataLoaded(false);
     const selected = Array.from(selection.ids);
     const selectedRows = rows.filter((row) => selected!.includes(row.id));
+    // DEBUG
+    console.log("Selected = ", selectedRows);
     saveSelectedRows(selectedRows);
   };
 

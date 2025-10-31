@@ -25,6 +25,7 @@ interface DataState {
   showDropZone: boolean;
   dataLoaded: boolean;
   visualisationEnabled: boolean;
+  currentMonth: string;
   setDataLoaded: (status: boolean) => void;
   rows: DataRow[];
   selectedRows: DataRow[];
@@ -43,6 +44,7 @@ const useStore = create<DataState>((set) => ({
   rows: [],
   selectedRows: [],
   visualisationEnabled: false,
+  currentMonth: "",
   loadCSVFile: (file) => {
     Papa.parse<string[]>(file, {
       skipEmptyLines: true,
@@ -79,12 +81,13 @@ const useStore = create<DataState>((set) => ({
         currentRow.id === row.id ? { ...currentRow, ...row } : currentRow
       ),
     })),
-  saveSelectedRows: (data) =>
+  saveSelectedRows: (data) => {
     set(() => ({
       selectedRows: data,
       visualisationEnabled: true,
       showDropZone: false,
-    })),
+    }));
+  },
   vizType: "Incomings",
   setVisualisationType: (visualisationType) =>
     set(() => ({ vizType: visualisationType })),
