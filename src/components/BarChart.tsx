@@ -42,24 +42,39 @@ export const BarChart = ({ data }: BarChartProps) => {
   return (
     <>
       {Object.entries(totalsOut).map(([key, [total, vat]], index) => {
-        const height = -total / scale / 2;
+        const newVat = -vat;
+        const newTotal = -total;
+        const height = (newTotal - newVat) / scale;
+        const textHeight = newTotal / scale;
         return (
           <>
             <Cylinder
               key={`${key}_out`}
               position={[
                 BAR_CHART.OUTGOING_START + index * -BAR_CHART.GAP,
-                height,
+                height / 2,
                 0,
               ]}
-              args={[BAR_CHART.RADIUS, BAR_CHART.RADIUS, -total / scale]}
+              args={[BAR_CHART.RADIUS, BAR_CHART.RADIUS, height]}
             >
               <meshStandardMaterial color={"red"} />
             </Cylinder>
+            {newVat > 0 ? (
+              <Cylinder
+                position={[
+                  BAR_CHART.OUTGOING_START + index * -BAR_CHART.GAP,
+                  height + newVat / 2,
+                  0,
+                ]}
+                args={[BAR_CHART.RADIUS, BAR_CHART.RADIUS, newVat / scale]}
+              >
+                <meshStandardMaterial color={"green"} />
+              </Cylinder>
+            ) : null}
             <Text
               position={[
                 BAR_CHART.OUTGOING_START + index * -BAR_CHART.GAP,
-                height * 2 + BAR_CHART.TEXT_OFFSET,
+                textHeight + BAR_CHART.TEXT_OFFSET,
                 0,
               ]}
               color={"black"}
