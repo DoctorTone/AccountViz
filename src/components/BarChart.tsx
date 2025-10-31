@@ -63,7 +63,7 @@ export const BarChart = ({ data }: BarChartProps) => {
               <Cylinder
                 position={[
                   BAR_CHART.OUTGOING_START + index * -BAR_CHART.GAP,
-                  height + newVat / 2,
+                  height + newVat / scale / 2,
                   0,
                 ]}
                 args={[BAR_CHART.RADIUS, BAR_CHART.RADIUS, newVat / scale]}
