@@ -46,7 +46,7 @@ const useStore = create<DataState>((set) => ({
   selectedRows: [],
   visualisationEnabled: false,
   currentMonth: "",
-  currentYear: "",
+  currentYear: 2025,
   loadCSVFile: (file) => {
     Papa.parse<string[]>(file, {
       skipEmptyLines: true,

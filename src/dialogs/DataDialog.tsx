@@ -79,7 +79,18 @@ const DataDialog = () => {
       field: "vat",
       headerName: "VAT",
       width: 75,
-      renderCell: () => <Checkbox />,
+      renderCell: (params) => {
+        const checked = Boolean(params.row.vat);
+        return (
+          <Checkbox
+            checked={checked}
+            onChange={(event) => {
+              const newRow = { ...params.row, vat: event.target.checked };
+              updateRow(newRow);
+            }}
+          />
+        );
+      },
     },
     {
       field: "category",
