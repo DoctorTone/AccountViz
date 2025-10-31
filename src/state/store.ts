@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import Papa from "papaparse";
-import { type VizType } from "./Config";
+import { type VizType, MONTHS } from "./Config";
 
 type Expenses =
   | "Misc"
@@ -26,6 +26,7 @@ interface DataState {
   dataLoaded: boolean;
   visualisationEnabled: boolean;
   currentMonth: string;
+  currentYear: number;
   setDataLoaded: (status: boolean) => void;
   rows: DataRow[];
   selectedRows: DataRow[];
@@ -45,6 +46,7 @@ const useStore = create<DataState>((set) => ({
   selectedRows: [],
   visualisationEnabled: false,
   currentMonth: "",
+  currentYear: "",
   loadCSVFile: (file) => {
     Papa.parse<string[]>(file, {
       skipEmptyLines: true,
@@ -82,6 +84,10 @@ const useStore = create<DataState>((set) => ({
       ),
     })),
   saveSelectedRows: (data) => {
+    const date = new Date(data[0].date);
+    const month = MONTHS[date.getMonth()];
+    set(() => ({ currentMonth: month }));
+    set(() => ({ currentYear: date.getFullYear() }));
     set(() => ({
       selectedRows: data,
       visualisationEnabled: true,
