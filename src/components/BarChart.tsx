@@ -68,7 +68,7 @@ export const BarChart = ({ data }: BarChartProps) => {
                 ]}
                 args={[BAR_CHART.RADIUS, BAR_CHART.RADIUS, newVat / scale]}
               >
-                <meshStandardMaterial color={"green"} />
+                <meshStandardMaterial color={"yellow"} />
               </Cylinder>
             ) : null}
             <Text

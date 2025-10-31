@@ -35,11 +35,6 @@ const Visualisation = () => {
             }
           }
 
-          // DEBUG
-          console.log("Totals = ", totals);
-          Object.entries(totals).map(([key, [total, vat]]) => {
-            console.log("Value = ", total, vat);
-          });
           return totals;
         }
         break;
@@ -58,6 +53,9 @@ const Visualisation = () => {
 
           selectedRows.forEach((row) => {
             totals[row.category][0] += row.amount;
+            if (row.vat) {
+              totals[row.category][1] += row.amount / 6;
+            }
           });
 
           return totals;
