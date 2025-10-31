@@ -2,7 +2,7 @@ import { Cylinder, Text } from "@react-three/drei";
 import { BAR_CHART } from "../state/Config";
 
 type CategoryTotals = {
-  [key: string]: number;
+  [key: string]: number[];
 };
 
 interface BarChartProps {
@@ -11,20 +11,29 @@ interface BarChartProps {
 
 export const BarChart = ({ data }: BarChartProps) => {
   const totalsOut = Object.fromEntries(
-    Object.entries(data).filter(([_, value]) => value < -0.1)
+    Object.entries(data).filter(([_, [total, vat]]) => total < -0.1)
   );
 
   // Get max (of negative values)
-  const valuesOut = Object.values(totalsOut);
-  const maxOut = Math.min(...valuesOut) * -1;
+  let maxOut = 0;
+  Object.entries(data).forEach(([key, [total, vat]]) => {
+    if (total < maxOut) {
+      maxOut = total;
+    }
+  });
+  maxOut *= -1;
 
   const totalsIn = Object.fromEntries(
-    Object.entries(data).filter(([_, value]) => value > 0.1)
+    Object.entries(data).filter(([_, [total, vat]]) => total > 0.1)
   );
 
   // Get max
-  const valuesIn = Object.values(totalsIn);
-  const maxIn = Math.max(...valuesIn);
+  let maxIn = 0;
+  Object.entries(data).forEach(([key, [total, vat]]) => {
+    if (total > maxIn) {
+      maxIn = total;
+    }
+  });
 
   // Get bigger of two
   const max = Math.max(maxIn, maxOut);
@@ -32,8 +41,8 @@ export const BarChart = ({ data }: BarChartProps) => {
 
   return (
     <>
-      {Object.entries(totalsOut).map(([key, value], index) => {
-        const height = -value / scale / 2;
+      {Object.entries(totalsOut).map(([key, [total, vat]], index) => {
+        const height = -total / scale / 2;
         return (
           <>
             <Cylinder
@@ -43,7 +52,7 @@ export const BarChart = ({ data }: BarChartProps) => {
                 height,
                 0,
               ]}
-              args={[BAR_CHART.RADIUS, BAR_CHART.RADIUS, -value / scale]}
+              args={[BAR_CHART.RADIUS, BAR_CHART.RADIUS, -total / scale]}
             >
               <meshStandardMaterial color={"red"} />
             </Cylinder>
@@ -56,14 +65,14 @@ export const BarChart = ({ data }: BarChartProps) => {
               color={"black"}
               fontSize={0.5}
             >
-              {`${key} £${-value}`}
+              {`${key} £${-total.toFixed(2)}`}
             </Text>
           </>
         );
       })}
 
-      {Object.entries(totalsIn).map(([key, value], index) => {
-        const height = value / scale / 2;
+      {Object.entries(totalsIn).map(([key, [total, vat]], index) => {
+        const height = total / scale / 2;
         return (
           <>
             <Cylinder
@@ -73,7 +82,7 @@ export const BarChart = ({ data }: BarChartProps) => {
                 height,
                 0,
               ]}
-              args={[BAR_CHART.RADIUS, BAR_CHART.RADIUS, value / scale]}
+              args={[BAR_CHART.RADIUS, BAR_CHART.RADIUS, total / scale]}
             >
               <meshStandardMaterial color={"blue"} />
             </Cylinder>
@@ -86,7 +95,7 @@ export const BarChart = ({ data }: BarChartProps) => {
               color={"black"}
               fontSize={0.5}
             >
-              {key}
+              {`${key} £${total.toFixed(2)}`}
             </Text>
           </>
         );

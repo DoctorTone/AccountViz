@@ -15,19 +15,31 @@ const Visualisation = () => {
       case "Incomings":
         {
           const totals = {
-            Incoming: 0,
-            Outgoing: 0,
+            Incoming: [0, 0],
+            Outgoing: [0, 0],
           };
 
           for (let i = 0; i < selectedRows.length; ++i) {
             const amount = selectedRows[i].amount;
+            const vat = selectedRows[i].vat;
             if (amount < 0) {
-              totals.Outgoing += amount;
+              totals.Outgoing[0] += amount;
+              if (vat) {
+                totals.Outgoing[1] += amount / 6;
+              }
             } else {
-              totals.Incoming += amount;
+              totals.Incoming[0] += amount;
+              if (vat) {
+                totals.Incoming[1] += amount / 6;
+              }
             }
           }
 
+          // DEBUG
+          console.log("Totals = ", totals);
+          Object.entries(totals).map(([key, [total, vat]]) => {
+            console.log("Value = ", total, vat);
+          });
           return totals;
         }
         break;
@@ -35,17 +47,17 @@ const Visualisation = () => {
       case "Categories":
         {
           const totals = {
-            Misc: 0,
-            Accountants: 0,
-            Consumables: 0,
-            "Web hosting": 0,
-            Subscriptions: 0,
-            "Training material": 0,
-            "Computer equipment": 0,
+            Misc: [0, 0],
+            Accountants: [0, 0],
+            Consumables: [0, 0],
+            "Web hosting": [0, 0],
+            Subscriptions: [0, 0],
+            "Training material": [0, 0],
+            "Computer equipment": [0, 0],
           };
 
           selectedRows.forEach((row) => {
-            totals[row.category] += row.amount;
+            totals[row.category][0] += row.amount;
           });
 
           return totals;
