@@ -8,7 +8,7 @@ const Time = () => {
   return (
     <div id="period" className="panel">
       <Typography variant="h6">
-        Period: {month} {year.toString()}
+        Period: {month} {year != null && year.toString()}
       </Typography>
     </div>
   );

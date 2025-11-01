@@ -26,7 +26,7 @@ interface DataState {
   dataLoaded: boolean;
   visualisationEnabled: boolean;
   currentMonth: string;
-  currentYear: number;
+  currentYear: number | null;
   setDataLoaded: (status: boolean) => void;
   rows: DataRow[];
   selectedRows: DataRow[];
@@ -45,8 +45,8 @@ const useStore = create<DataState>((set) => ({
   rows: [],
   selectedRows: [],
   visualisationEnabled: false,
-  currentMonth: "",
-  currentYear: 2025,
+  currentMonth: "No data",
+  currentYear: null,
   loadCSVFile: (file) => {
     Papa.parse<string[]>(file, {
       skipEmptyLines: true,
