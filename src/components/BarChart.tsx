@@ -47,9 +47,8 @@ export const BarChart = ({ data }: BarChartProps) => {
         const height = (newTotal - newVat) / scale;
         const textHeight = newTotal / scale;
         return (
-          <>
+          <group key={`${key}_out`}>
             <Cylinder
-              key={`${key}_out`}
               position={[
                 BAR_CHART.OUTGOING_START + index * -BAR_CHART.GAP,
                 height / 2,
@@ -82,16 +81,15 @@ export const BarChart = ({ data }: BarChartProps) => {
             >
               {`${key} £${-total.toFixed(2)}`}
             </Text>
-          </>
+          </group>
         );
       })}
 
       {Object.entries(totalsIn).map(([key, [total, vat]], index) => {
         const height = total / scale / 2;
         return (
-          <>
+          <group key={`${key}_in`}>
             <Cylinder
-              key={`${key}_in`}
               position={[
                 BAR_CHART.INCOMING_START + index * BAR_CHART.GAP,
                 height,
@@ -112,7 +110,7 @@ export const BarChart = ({ data }: BarChartProps) => {
             >
               {`${key} £${total.toFixed(2)}`}
             </Text>
-          </>
+          </group>
         );
       })}
     </>
