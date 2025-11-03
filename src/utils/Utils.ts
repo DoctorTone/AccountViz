@@ -13,7 +13,7 @@ export const sortMonthlyData = (data: DataRow[]) => {
     date = new Date(data[i].date);
     month = MONTHS[date.getMonth()];
     year = date.getFullYear();
-    monthYear = `${month}${year}`;
+    monthYear = `${month} ${year}`;
     if (monthYear != currentMonthYear) {
       if (monthData.length) {
         outputData[currentMonthYear] = monthData;

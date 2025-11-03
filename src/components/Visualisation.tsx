@@ -3,10 +3,10 @@ import useStore from "../state/store";
 import { BarChart } from "./BarChart";
 
 const Visualisation = () => {
-  const selectedRows = useStore((state) => state.selectedRows);
+  const currentSelection = useStore((state) => state.currentSelection);
   const vizType = useStore((state) => state.vizType);
 
-  if (!selectedRows.length) {
+  if (!currentSelection.length) {
     return null;
   }
 
@@ -19,9 +19,9 @@ const Visualisation = () => {
             Outgoing: [0, 0],
           };
 
-          for (let i = 0; i < selectedRows.length; ++i) {
-            const amount = selectedRows[i].amount;
-            const vat = selectedRows[i].vat;
+          for (let i = 0; i < currentSelection.length; ++i) {
+            const amount = currentSelection[i].amount;
+            const vat = currentSelection[i].vat;
             if (amount < 0) {
               totals.Outgoing[0] += amount;
               if (vat) {
@@ -51,7 +51,7 @@ const Visualisation = () => {
             "Computer equipment": [0, 0],
           };
 
-          selectedRows.forEach((row) => {
+          currentSelection.forEach((row) => {
             totals[row.category][0] += row.amount;
             if (row.vat) {
               totals[row.category][1] += row.amount / 6;
@@ -66,7 +66,7 @@ const Visualisation = () => {
         return {};
         break;
     }
-  }, [selectedRows, vizType]);
+  }, [currentSelection, vizType]);
 
   return (
     <>

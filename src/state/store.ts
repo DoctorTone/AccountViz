@@ -19,6 +19,7 @@ interface DataState {
   selectedMonths: {
     [key: string]: DataRow[];
   };
+  currentSelection: DataRow[];
   vizType: VizType;
   setVisualisationType: (vizType: VizType) => void;
 }
@@ -32,6 +33,7 @@ const useStore = create<DataState>((set) => ({
   visualisationEnabled: false,
   currentMonth: "No data",
   currentYear: null,
+  currentSelection: [],
   loadCSVFile: (file) => {
     Papa.parse<string[]>(file, {
       skipEmptyLines: true,
@@ -80,6 +82,11 @@ const useStore = create<DataState>((set) => ({
       showDropZone: false,
     }));
     const monthlyData = sortMonthlyData(data);
+    set((state) => ({
+      selectedMonths: monthlyData,
+      currentSelection:
+        monthlyData[`${state.currentMonth} ${state.currentYear}`],
+    }));
     // DEBUG
     console.log("Monthly = ", monthlyData);
   },
