@@ -19,7 +19,9 @@ interface DataState {
   selectedMonths: {
     [key: string]: DataRow[];
   };
+  currentPeriod: string;
   selectNextMonth: () => void;
+  selectPrevMonth: () => void;
   currentSelection: DataRow[];
   vizType: VizType;
   setVisualisationType: (vizType: VizType) => void;
@@ -35,6 +37,7 @@ const useStore = create<DataState>((set, get) => ({
   currentMonth: "No data",
   currentYear: null,
   currentSelection: [],
+  currentPeriod: "",
   loadCSVFile: (file) => {
     Papa.parse<string[]>(file, {
       skipEmptyLines: true,
@@ -77,6 +80,7 @@ const useStore = create<DataState>((set, get) => ({
     const month = MONTHS[date.getMonth()];
     set(() => ({ currentMonth: month }));
     set(() => ({ currentYear: date.getFullYear() }));
+    set(() => ({ currentPeriod: `${month} ${date.getFullYear()}` }));
     set(() => ({
       selectedRows: data,
       visualisationEnabled: true,
@@ -91,13 +95,29 @@ const useStore = create<DataState>((set, get) => ({
   },
   selectNextMonth: () => {
     const selectedMonths = get().selectedMonths;
-    const currentPeriod = `${get().currentMonth} ${get().currentYear}`;
+    const currentPeriod = get().currentPeriod;
     const keys = Object.keys(selectedMonths);
     let nextMonth = keys.indexOf(currentPeriod) + 1;
     if (nextMonth >= keys.length) {
       nextMonth = 0;
     }
-    set(() => ({ currentSelection: selectedMonths[keys[nextMonth]] }));
+    set(() => ({
+      currentSelection: selectedMonths[keys[nextMonth]],
+      currentPeriod: keys[nextMonth],
+    }));
+  },
+  selectPrevMonth: () => {
+    const selectedMonths = get().selectedMonths;
+    const currentPeriod = get().currentPeriod;
+    const keys = Object.keys(selectedMonths);
+    let prevMonth = keys.indexOf(currentPeriod) - 1;
+    if (prevMonth < 0) {
+      prevMonth = keys.length - 1;
+    }
+    set(() => ({
+      currentSelection: selectedMonths[keys[prevMonth]],
+      currentPeriod: keys[prevMonth],
+    }));
   },
   vizType: "Incomings",
   setVisualisationType: (visualisationType) =>
