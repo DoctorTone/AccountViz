@@ -19,12 +19,13 @@ interface DataState {
   selectedMonths: {
     [key: string]: DataRow[];
   };
+  selectNextMonth: () => void;
   currentSelection: DataRow[];
   vizType: VizType;
   setVisualisationType: (vizType: VizType) => void;
 }
 
-const useStore = create<DataState>((set) => ({
+const useStore = create<DataState>((set, get) => ({
   showDropZone: true,
   dataLoaded: false,
   setDataLoaded: (status) => set({ dataLoaded: status }),
@@ -87,8 +88,16 @@ const useStore = create<DataState>((set) => ({
       currentSelection:
         monthlyData[`${state.currentMonth} ${state.currentYear}`],
     }));
-    // DEBUG
-    console.log("Monthly = ", monthlyData);
+  },
+  selectNextMonth: () => {
+    const selectedMonths = get().selectedMonths;
+    const currentPeriod = `${get().currentMonth} ${get().currentYear}`;
+    const keys = Object.keys(selectedMonths);
+    let nextMonth = keys.indexOf(currentPeriod) + 1;
+    if (nextMonth >= keys.length) {
+      nextMonth = 0;
+    }
+    set(() => ({ currentSelection: selectedMonths[keys[nextMonth]] }));
   },
   vizType: "Incomings",
   setVisualisationType: (visualisationType) =>
