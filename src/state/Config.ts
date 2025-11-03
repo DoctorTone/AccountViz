@@ -35,7 +35,8 @@ export type Expenses =
   | "Web hosting"
   | "Subscriptions"
   | "Training material"
-  | "Computer equipment";
+  | "Computer equipment"
+  | "Invoices";
 
 export type DataRow = {
   id: number;
@@ -55,6 +56,7 @@ export const ExpensesList = [
   "Subscriptions",
   "Training material",
   "Computer equipment",
+  "Invoices",
 ];
 
 export const MONTHS = [

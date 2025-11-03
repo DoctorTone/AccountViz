@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import useStore from "../state/store";
 import { BarChart } from "./BarChart";
+import { ExpensesList } from "../state/Config";
 
 const Visualisation = () => {
   const currentSelection = useStore((state) => state.currentSelection);
@@ -41,15 +42,10 @@ const Visualisation = () => {
 
       case "Categories":
         {
-          const totals = {
-            Misc: [0, 0],
-            Accountants: [0, 0],
-            Consumables: [0, 0],
-            "Web hosting": [0, 0],
-            Subscriptions: [0, 0],
-            "Training material": [0, 0],
-            "Computer equipment": [0, 0],
-          };
+          const totals: { [key: string]: number[] } = {};
+          ExpensesList.forEach((expense) => {
+            totals[expense] = [0, 0];
+          });
 
           currentSelection.forEach((row) => {
             totals[row.category][0] += row.amount;

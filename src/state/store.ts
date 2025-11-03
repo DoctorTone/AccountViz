@@ -37,7 +37,7 @@ const useStore = create<DataState>((set, get) => ({
   currentMonth: "No data",
   currentYear: null,
   currentSelection: [],
-  currentPeriod: "",
+  currentPeriod: "No data",
   loadCSVFile: (file) => {
     Papa.parse<string[]>(file, {
       skipEmptyLines: true,
