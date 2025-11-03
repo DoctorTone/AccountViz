@@ -1,25 +1,7 @@
 import { create } from "zustand";
 import Papa from "papaparse";
-import { type VizType, MONTHS } from "./Config";
-
-type Expenses =
-  | "Misc"
-  | "Accountants"
-  | "Consumables"
-  | "Web hosting"
-  | "Subscriptions"
-  | "Training material"
-  | "Computer equipment";
-
-type DataRow = {
-  id: number;
-  date: string;
-  transaction: string;
-  amount: number;
-  description: string;
-  vat: boolean;
-  category: Expenses;
-};
+import { type VizType, MONTHS, type DataRow } from "./Config";
+import { sortMonthlyData } from "../utils/Utils";
 
 interface DataState {
   showDropZone: boolean;
@@ -34,6 +16,9 @@ interface DataState {
   setRows: (data: DataRow[]) => void;
   updateRow: (row: DataRow) => void;
   saveSelectedRows: (data: DataRow[]) => void;
+  selectedMonths: {
+    [key: string]: DataRow[];
+  };
   vizType: VizType;
   setVisualisationType: (vizType: VizType) => void;
 }
@@ -83,6 +68,7 @@ const useStore = create<DataState>((set) => ({
         currentRow.id === row.id ? { ...currentRow, ...row } : currentRow
       ),
     })),
+  selectedMonths: {},
   saveSelectedRows: (data) => {
     const date = new Date(data[0].date);
     const month = MONTHS[date.getMonth()];
@@ -93,6 +79,9 @@ const useStore = create<DataState>((set) => ({
       visualisationEnabled: true,
       showDropZone: false,
     }));
+    const monthlyData = sortMonthlyData(data);
+    // DEBUG
+    console.log("Monthly = ", monthlyData);
   },
   vizType: "Incomings",
   setVisualisationType: (visualisationType) =>

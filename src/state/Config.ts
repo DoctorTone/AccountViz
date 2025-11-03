@@ -28,6 +28,25 @@ export const gridConfig = {
 
 export type VizType = "Incomings" | "Transaction" | "Categories";
 
+export type Expenses =
+  | "Misc"
+  | "Accountants"
+  | "Consumables"
+  | "Web hosting"
+  | "Subscriptions"
+  | "Training material"
+  | "Computer equipment";
+
+export type DataRow = {
+  id: number;
+  date: string;
+  transaction: string;
+  amount: number;
+  description: string;
+  vat: boolean;
+  category: Expenses;
+};
+
 export const ExpensesList = [
   "Misc",
   "Accountants",
