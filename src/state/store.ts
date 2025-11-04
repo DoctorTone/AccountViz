@@ -29,11 +29,15 @@ interface DataState {
   outgoingColour: string;
   incomingColour: string;
   VATColour: string;
+  textScale: number;
+  barChartGap: number;
+  barChartStart: number;
   setOutColour: (colour: string) => void;
   setInColour: (colour: string) => void;
   setVATColour: (colour: string) => void;
-  textScale: number;
   setTextScale: (scale: number) => void;
+  setBarChartGap: (gap: number) => void;
+  setBarChartStart: (start: number) => void;
 }
 
 const useStore = create<DataState>((set, get) => ({
@@ -142,6 +146,10 @@ const useStore = create<DataState>((set, get) => ({
   setVATColour: (colour) => set(() => ({ VATColour: colour })),
   textScale: 1,
   setTextScale: (scale) => set(() => ({ textScale: scale })),
+  barChartGap: 4,
+  setBarChartGap: (gap) => set(() => ({ barChartGap: gap })),
+  barChartStart: 2,
+  setBarChartStart: (start) => set(() => ({ barChartStart: start })),
 }));
 
 export default useStore;

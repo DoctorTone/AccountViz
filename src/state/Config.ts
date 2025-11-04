@@ -12,10 +12,7 @@ export const GRID = {
 };
 
 export const BAR_CHART = {
-  OUTGOING_START: -2,
-  INCOMING_START: 2,
   MAX_HEIGHT: 10,
-  GAP: 4,
   RADIUS: 0.5,
   TEXT_OFFSET: 0.5,
 };

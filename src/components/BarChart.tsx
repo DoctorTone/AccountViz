@@ -16,6 +16,8 @@ export const BarChart = ({ data, offset }: BarChartProps) => {
   const inColour = useStore((state) => state.incomingColour);
   const VATColour = useStore((state) => state.VATColour);
   const textScale = useStore((state) => state.textScale);
+  const barChartGap = useStore((state) => state.barChartGap);
+  const barChartStart = useStore((state) => state.barChartStart);
   const totalsOut = Object.fromEntries(
     Object.entries(data).filter(([_, [total, __]]) => total < -0.1)
   );
@@ -56,7 +58,7 @@ export const BarChart = ({ data, offset }: BarChartProps) => {
           <group key={`${key}_out`}>
             <Cylinder
               position={[
-                BAR_CHART.OUTGOING_START + index * -BAR_CHART.GAP,
+                -barChartStart + index * -barChartGap,
                 height / 2,
                 offset * 3,
               ]}
@@ -67,7 +69,7 @@ export const BarChart = ({ data, offset }: BarChartProps) => {
             {newVat > 0 ? (
               <Cylinder
                 position={[
-                  BAR_CHART.OUTGOING_START + index * -BAR_CHART.GAP,
+                  -barChartStart + index * -barChartGap,
                   height + newVat / scale / 2,
                   offset * 3,
                 ]}
@@ -78,7 +80,7 @@ export const BarChart = ({ data, offset }: BarChartProps) => {
             ) : null}
             <Text
               position={[
-                BAR_CHART.OUTGOING_START + index * -BAR_CHART.GAP,
+                -barChartStart + index * -barChartGap,
                 textHeight + BAR_CHART.TEXT_OFFSET,
                 offset * 3,
               ]}
@@ -99,11 +101,7 @@ export const BarChart = ({ data, offset }: BarChartProps) => {
         return (
           <group key={`${key}_in`}>
             <Cylinder
-              position={[
-                BAR_CHART.INCOMING_START + index * BAR_CHART.GAP,
-                height / 2,
-                0,
-              ]}
+              position={[barChartStart + index * barChartGap, height / 2, 0]}
               args={[BAR_CHART.RADIUS, BAR_CHART.RADIUS, height]}
             >
               <meshStandardMaterial color={inColour} />
@@ -111,7 +109,7 @@ export const BarChart = ({ data, offset }: BarChartProps) => {
             {vat > 0 ? (
               <Cylinder
                 position={[
-                  BAR_CHART.INCOMING_START + index * BAR_CHART.GAP,
+                  barChartStart + index * barChartGap,
                   height + vat / scale / 2,
                   0,
                 ]}
@@ -122,7 +120,7 @@ export const BarChart = ({ data, offset }: BarChartProps) => {
             ) : null}
             <Text
               position={[
-                BAR_CHART.INCOMING_START + index * BAR_CHART.GAP,
+                barChartStart + index * barChartGap,
                 textHeight + BAR_CHART.TEXT_OFFSET,
                 0,
               ]}

@@ -6,6 +6,8 @@ const Options = () => {
   const setInColour = useStore((state) => state.setInColour);
   const setVATColour = useStore((state) => state.setVATColour);
   const setTextScale = useStore((state) => state.setTextScale);
+  const setBarChartGap = useStore((state) => state.setBarChartGap);
+  const setBarChartStart = useStore((state) => state.setBarChartStart);
 
   const data = useControls({
     OutColour: {
@@ -33,6 +35,24 @@ const Options = () => {
       step: 0.1,
       onChange: (scale) => {
         setTextScale(scale);
+      },
+    },
+    Distance: {
+      value: 4,
+      min: 1,
+      max: 8,
+      step: 1,
+      onChange: (gap) => {
+        setBarChartGap(gap);
+      },
+    },
+    Start: {
+      value: 2,
+      min: 1,
+      max: 8,
+      step: 1,
+      onChange: (start) => {
+        setBarChartStart(start);
       },
     },
   });
