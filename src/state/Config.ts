@@ -26,6 +26,12 @@ export const gridConfig = {
   cellThickness: 1,
 };
 
+export const COLOURS = {
+  IN: "#0000ff",
+  OUT: "#ff0000",
+  VAT: "#ffff00",
+};
+
 export type VizType = "Incomings" | "Transaction" | "Categories";
 
 export type Expenses =

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import Papa from "papaparse";
-import { type VizType, MONTHS, type DataRow } from "./Config";
+import { type VizType, MONTHS, type DataRow, COLOURS } from "./Config";
 import { sortMonthlyData } from "../utils/Utils";
 
 interface DataState {
@@ -132,9 +132,9 @@ const useStore = create<DataState>((set, get) => ({
   setVisualisationType: (visualisationType) =>
     set(() => ({ vizType: visualisationType })),
   // Colours
-  outgoingColour: "#ff0000",
-  incomingColour: "#0000ff",
-  VATColour: "yellow",
+  outgoingColour: COLOURS.OUT,
+  incomingColour: COLOURS.IN,
+  VATColour: COLOURS.VAT,
   setOutColour: (colour) => set(() => ({ outgoingColour: colour })),
   setInColour: (colour) => set(() => ({ incomingColour: colour })),
   setVATColour: (colour) => set(() => ({ VATColour: colour })),
