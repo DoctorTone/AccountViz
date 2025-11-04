@@ -52,7 +52,7 @@ body {
   display: none;
 }
 #views {
-  top: 2%;
+  top: 12.5%;
   left: 2%;
 }
 #showData {
@@ -60,6 +60,6 @@ body {
   left: 2%;
 }
 #period {
-  top: 5%;
-  right: 2%;
+  top: 2%;
+  left: 2%;
 }
