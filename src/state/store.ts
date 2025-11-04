@@ -25,6 +25,13 @@ interface DataState {
   currentSelection: DataRow[];
   vizType: VizType;
   setVisualisationType: (vizType: VizType) => void;
+  // Colours
+  outgoingColour: string;
+  incomingColour: string;
+  VATColour: string;
+  setOutColour: (colour: string) => void;
+  setInColour: (colour: string) => void;
+  setVATColour: (colour: string) => void;
 }
 
 const useStore = create<DataState>((set, get) => ({
@@ -124,6 +131,13 @@ const useStore = create<DataState>((set, get) => ({
   vizType: "Incomings",
   setVisualisationType: (visualisationType) =>
     set(() => ({ vizType: visualisationType })),
+  // Colours
+  outgoingColour: "#ff0000",
+  incomingColour: "#0000ff",
+  VATColour: "yellow",
+  setOutColour: (colour) => set(() => ({ outgoingColour: colour })),
+  setInColour: (colour) => set(() => ({ incomingColour: colour })),
+  setVATColour: (colour) => set(() => ({ VATColour: colour })),
 }));
 
 export default useStore;

@@ -1,5 +1,6 @@
 import { Cylinder, Text } from "@react-three/drei";
 import { BAR_CHART } from "../state/Config";
+import useStore from "../state/store";
 
 type CategoryTotals = {
   [key: string]: number[];
@@ -10,6 +11,9 @@ interface BarChartProps {
 }
 
 export const BarChart = ({ data }: BarChartProps) => {
+  const outColour = useStore((state) => state.outgoingColour);
+  const inColour = useStore((state) => state.incomingColour);
+  const VATColour = useStore((state) => state.VATColour);
   const totalsOut = Object.fromEntries(
     Object.entries(data).filter(([_, [total, vat]]) => total < -0.1)
   );
@@ -56,7 +60,7 @@ export const BarChart = ({ data }: BarChartProps) => {
               ]}
               args={[BAR_CHART.RADIUS, BAR_CHART.RADIUS, height]}
             >
-              <meshStandardMaterial color={"red"} />
+              <meshStandardMaterial color={outColour} />
             </Cylinder>
             {newVat > 0 ? (
               <Cylinder
@@ -67,7 +71,7 @@ export const BarChart = ({ data }: BarChartProps) => {
                 ]}
                 args={[BAR_CHART.RADIUS, BAR_CHART.RADIUS, newVat / scale]}
               >
-                <meshStandardMaterial color={"yellow"} />
+                <meshStandardMaterial color={VATColour} />
               </Cylinder>
             ) : null}
             <Text
@@ -99,7 +103,7 @@ export const BarChart = ({ data }: BarChartProps) => {
               ]}
               args={[BAR_CHART.RADIUS, BAR_CHART.RADIUS, height]}
             >
-              <meshStandardMaterial color={"blue"} />
+              <meshStandardMaterial color={inColour} />
             </Cylinder>
             {vat > 0 ? (
               <Cylinder
@@ -110,7 +114,7 @@ export const BarChart = ({ data }: BarChartProps) => {
                 ]}
                 args={[BAR_CHART.RADIUS, BAR_CHART.RADIUS, vat / scale]}
               >
-                <meshStandardMaterial color={"yellow"} />
+                <meshStandardMaterial color={VATColour} />
               </Cylinder>
             ) : null}
             <Text
