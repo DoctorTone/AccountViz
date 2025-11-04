@@ -87,29 +87,43 @@ export const BarChart = ({ data }: BarChartProps) => {
       })}
 
       {Object.entries(totalsIn).map(([key, [total, vat]], index) => {
-        const height = total / scale / 2;
+        const height = (total - vat) / scale;
+        const textHeight = total / scale;
         return (
           <group key={`${key}_in`}>
             <Cylinder
               position={[
                 BAR_CHART.INCOMING_START + index * BAR_CHART.GAP,
-                height,
+                height / 2,
                 0,
               ]}
-              args={[BAR_CHART.RADIUS, BAR_CHART.RADIUS, total / scale]}
+              args={[BAR_CHART.RADIUS, BAR_CHART.RADIUS, height]}
             >
               <meshStandardMaterial color={"blue"} />
             </Cylinder>
+            {vat > 0 ? (
+              <Cylinder
+                position={[
+                  BAR_CHART.INCOMING_START + index * BAR_CHART.GAP,
+                  height + vat / scale / 2,
+                  0,
+                ]}
+                args={[BAR_CHART.RADIUS, BAR_CHART.RADIUS, vat / scale]}
+              >
+                <meshStandardMaterial color={"yellow"} />
+              </Cylinder>
+            ) : null}
             <Text
               position={[
                 BAR_CHART.INCOMING_START + index * BAR_CHART.GAP,
-                height * 2 + BAR_CHART.TEXT_OFFSET,
+                textHeight + BAR_CHART.TEXT_OFFSET,
                 0,
               ]}
               color={"black"}
               fontSize={0.5}
             >
-              {`${key} £${total.toFixed(2)}`}
+              {`${key} £${total.toFixed(2)} `}
+              {vat > 0 && `(£${vat.toFixed(2)})`}
             </Text>
           </group>
         );

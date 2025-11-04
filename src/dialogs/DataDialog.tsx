@@ -62,8 +62,8 @@ const DataDialog = () => {
 
   const columns: GridColDef[] = [
     { field: "id", headerName: "ID", width: 70 },
-    { field: "date", headerName: "Date", width: 130 },
-    { field: "transaction", headerName: "Type", width: 130 },
+    { field: "date", headerName: "Date", width: 140 },
+    { field: "transaction", headerName: "Type", width: 100 },
     {
       field: "amount",
       headerName: "Amount",
@@ -73,7 +73,7 @@ const DataDialog = () => {
     {
       field: "description",
       headerName: "Description",
-      width: 160,
+      width: 200,
     },
     {
       field: "vat",
@@ -106,8 +106,6 @@ const DataDialog = () => {
   const paginationModel = { page: 0, pageSize: 5 };
 
   const rowUpdate = (newRow: any, oldRow: any) => {
-    // DEBUG
-    console.log("Row updated");
     updateRow(newRow);
     return newRow;
   };
