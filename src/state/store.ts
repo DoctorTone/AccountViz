@@ -32,6 +32,8 @@ interface DataState {
   setOutColour: (colour: string) => void;
   setInColour: (colour: string) => void;
   setVATColour: (colour: string) => void;
+  textScale: number;
+  setTextScale: (scale: number) => void;
 }
 
 const useStore = create<DataState>((set, get) => ({
@@ -138,6 +140,8 @@ const useStore = create<DataState>((set, get) => ({
   setOutColour: (colour) => set(() => ({ outgoingColour: colour })),
   setInColour: (colour) => set(() => ({ incomingColour: colour })),
   setVATColour: (colour) => set(() => ({ VATColour: colour })),
+  textScale: 1,
+  setTextScale: (scale) => set(() => ({ textScale: scale })),
 }));
 
 export default useStore;

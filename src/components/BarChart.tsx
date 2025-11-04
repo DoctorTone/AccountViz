@@ -15,6 +15,7 @@ export const BarChart = ({ data, offset }: BarChartProps) => {
   const outColour = useStore((state) => state.outgoingColour);
   const inColour = useStore((state) => state.incomingColour);
   const VATColour = useStore((state) => state.VATColour);
+  const textScale = useStore((state) => state.textScale);
   const totalsOut = Object.fromEntries(
     Object.entries(data).filter(([_, [total, __]]) => total < -0.1)
   );
@@ -81,6 +82,7 @@ export const BarChart = ({ data, offset }: BarChartProps) => {
                 textHeight + BAR_CHART.TEXT_OFFSET,
                 offset * 3,
               ]}
+              scale={textScale}
               color={"black"}
               fontSize={0.5}
             >
@@ -124,6 +126,7 @@ export const BarChart = ({ data, offset }: BarChartProps) => {
                 textHeight + BAR_CHART.TEXT_OFFSET,
                 0,
               ]}
+              scale={textScale}
               color={"black"}
               fontSize={0.5}
             >

@@ -5,6 +5,7 @@ const Options = () => {
   const setOutColour = useStore((state) => state.setOutColour);
   const setInColour = useStore((state) => state.setInColour);
   const setVATColour = useStore((state) => state.setVATColour);
+  const setTextScale = useStore((state) => state.setTextScale);
 
   const data = useControls({
     OutColour: {
@@ -23,6 +24,15 @@ const Options = () => {
       value: "yellow",
       onChange: (colour) => {
         setVATColour(colour);
+      },
+    },
+    TextScale: {
+      value: 1,
+      min: 0.1,
+      max: 2,
+      step: 0.1,
+      onChange: (scale) => {
+        setTextScale(scale);
       },
     },
   });
