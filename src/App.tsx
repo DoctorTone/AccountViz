@@ -16,6 +16,7 @@ function App() {
           position: CAMERA.POSITION,
           near: CAMERA.NEAR,
           far: CAMERA.FAR,
+          fov: 45,
         }}
       >
         <DaySky />

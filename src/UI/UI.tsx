@@ -11,13 +11,13 @@ const UI = () => {
   return (
     <>
       <DropZone />
-      {/* <Options /> */}
+      <Options />
       <Settings />
       <DataDialog />
       <Views />
       <ShowData />
       <Time />
-      <div style={{ position: "fixed", top: 10, left: 10 }}>
+      <div style={{ position: "fixed", top: 10, right: 10 }}>
         <Leva fill collapsed={true} />
       </div>
     </>

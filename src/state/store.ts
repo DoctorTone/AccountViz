@@ -28,8 +28,10 @@ interface DataState {
 }
 
 const useStore = create<DataState>((set, get) => ({
-  showDropZone: true,
-  dataLoaded: false,
+  // DEBUG
+  showDropZone: false,
+  dataLoaded: true,
+
   setDataLoaded: (status) => set({ dataLoaded: status }),
   rows: [],
   selectedRows: [],

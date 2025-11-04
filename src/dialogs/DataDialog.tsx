@@ -16,6 +16,7 @@ import Paper from "@mui/material/Paper";
 import useStore from "../state/store";
 import Checkbox from "@mui/material/Checkbox";
 import { ExpensesList } from "../state/Config";
+import { dummyData } from "../state/DummyData";
 
 const DataDialog = () => {
   const [selection, setSelection] = useState<GridRowSelectionModel>();
@@ -26,17 +27,22 @@ const DataDialog = () => {
   const saveSelectedRows = useStore((state) => state.saveSelectedRows);
 
   const handleClose = () => {
-    if (!selection) {
-      // DEBUG
-      console.log("No data selected!");
-      return;
-    }
-    setDataLoaded(false);
-    const selected = Array.from(selection.ids);
-    const selectedRows = rows.filter((row) => selected!.includes(row.id));
     // DEBUG
-    console.log("Selected = ", selectedRows);
-    saveSelectedRows(selectedRows);
+    // if (!selection) {
+    //   // DEBUG
+    //   console.log("No data selected!");
+    //   return;
+    // }
+    // setDataLoaded(false);
+    // const selected = Array.from(selection.ids);
+    // const selectedRows = rows.filter((row) => selected!.includes(row.id));
+    // // DEBUG
+    // console.log("Selected = ", selectedRows);
+    // saveSelectedRows(selectedRows);
+
+    // Dummy data
+    setDataLoaded(false);
+    saveSelectedRows(dummyData);
   };
 
   const CustomTypeEditComponent = (params: GridEditSingleSelectCellProps) => {
