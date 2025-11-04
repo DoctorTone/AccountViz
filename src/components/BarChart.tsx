@@ -8,19 +8,20 @@ type CategoryTotals = {
 
 interface BarChartProps {
   data: CategoryTotals;
+  offset: number;
 }
 
-export const BarChart = ({ data }: BarChartProps) => {
+export const BarChart = ({ data, offset }: BarChartProps) => {
   const outColour = useStore((state) => state.outgoingColour);
   const inColour = useStore((state) => state.incomingColour);
   const VATColour = useStore((state) => state.VATColour);
   const totalsOut = Object.fromEntries(
-    Object.entries(data).filter(([_, [total, vat]]) => total < -0.1)
+    Object.entries(data).filter(([_, [total, __]]) => total < -0.1)
   );
 
   // Get max (of negative values)
   let maxOut = 0;
-  Object.entries(data).forEach(([key, [total, vat]]) => {
+  Object.entries(data).forEach(([_, [total, __]]) => {
     if (total < maxOut) {
       maxOut = total;
     }
@@ -56,7 +57,7 @@ export const BarChart = ({ data }: BarChartProps) => {
               position={[
                 BAR_CHART.OUTGOING_START + index * -BAR_CHART.GAP,
                 height / 2,
-                0,
+                offset * 3,
               ]}
               args={[BAR_CHART.RADIUS, BAR_CHART.RADIUS, height]}
             >
@@ -67,7 +68,7 @@ export const BarChart = ({ data }: BarChartProps) => {
                 position={[
                   BAR_CHART.OUTGOING_START + index * -BAR_CHART.GAP,
                   height + newVat / scale / 2,
-                  0,
+                  offset * 3,
                 ]}
                 args={[BAR_CHART.RADIUS, BAR_CHART.RADIUS, newVat / scale]}
               >
@@ -78,7 +79,7 @@ export const BarChart = ({ data }: BarChartProps) => {
               position={[
                 BAR_CHART.OUTGOING_START + index * -BAR_CHART.GAP,
                 textHeight + BAR_CHART.TEXT_OFFSET,
-                0,
+                offset * 3,
               ]}
               color={"black"}
               fontSize={0.5}
