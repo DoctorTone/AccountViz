@@ -79,7 +79,8 @@ export const BarChart = ({ data }: BarChartProps) => {
               color={"black"}
               fontSize={0.5}
             >
-              {`${key} £${-total.toFixed(2)}`}
+              {`${key} £${-total.toFixed(2)} `}
+              {newVat > 0 && `(£${newVat.toFixed(2)})`}
             </Text>
           </group>
         );
