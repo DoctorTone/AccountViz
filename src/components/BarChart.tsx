@@ -24,31 +24,27 @@ export const BarChart = ({ data, config }: BarChartProps) => {
   const barChartGap = useStore((state) => state.barChartGap);
   const barChartStart = useStore((state) => state.barChartStart);
 
-  const scale = config.maxValue / BAR_CHART.MAX_HEIGHT;
-
   return (
     <>
       {Object.entries(data).map(([key, [total, vat]], index) => {
         let start = barChartStart;
         let gap = barChartGap;
         let colour = inColour;
+        let scale = config.maxValue / BAR_CHART.MAX_HEIGHT;
         if (total < 0 && config.invertY) {
           total *= -1;
           vat *= -1;
           start *= -1;
           gap *= -1;
           colour = outColour;
+          scale = -config.minValue / BAR_CHART.MAX_HEIGHT;
         }
         const height = (total - vat) / scale;
         const textHeight = total / scale;
         return (
           <group key={`${key}_out`}>
             <Cylinder
-              position={[
-                -barChartStart + index * -barChartGap,
-                height / 2,
-                config.offset * 3,
-              ]}
+              position={[start + index * gap, height / 2, config.offset * 3]}
               args={[BAR_CHART.RADIUS, BAR_CHART.RADIUS, height]}
             >
               <meshStandardMaterial color={colour} />
@@ -75,7 +71,7 @@ export const BarChart = ({ data, config }: BarChartProps) => {
               color={"black"}
               fontSize={0.5}
             >
-              {`${key} £${-total.toFixed(2)} `}
+              {`${key} £${total.toFixed(2)} `}
               {vat > 0 && `(£${vat.toFixed(2)})`}
             </Text>
           </group>

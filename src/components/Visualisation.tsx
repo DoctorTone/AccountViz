@@ -96,7 +96,7 @@ const Visualisation = () => {
         <BarChart
           data={categoryTotal}
           config={{
-            offset: index,
+            offset: index % 2,
             maxValue: maxIn,
             minValue: maxOut,
             invertY: true,
