@@ -16,6 +16,7 @@ export const BAR_CHART = {
   RADIUS: 0.5,
   TEXT_OFFSET: 0.5,
   TEXT_SCALE: 0.6,
+  DISTANCE: 3,
 };
 
 export const gridConfig = {

@@ -90,11 +90,6 @@ const Visualisation = () => {
     return { monthlyData, maxIn, maxOut };
   }, [selectedMonths, vizType]);
 
-  // DEBUG
-  console.log("Monthly = ", monthlyData);
-  monthlyData[0] = {
-    Incoming: [1, 0],
-  };
   return (
     <>
       {monthlyData.map((categoryTotal, index) => (

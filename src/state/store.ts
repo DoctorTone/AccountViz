@@ -152,7 +152,7 @@ const useStore = create<DataState>((set, get) => ({
   setVATColour: (colour) => set(() => ({ VATColour: colour })),
   textScale: BAR_CHART.TEXT_SCALE,
   setTextScale: (scale) => set(() => ({ textScale: scale })),
-  barChartGap: 4,
+  barChartGap: BAR_CHART.DISTANCE,
   setBarChartGap: (gap) => set(() => ({ barChartGap: gap })),
   barChartStart: 2,
   setBarChartStart: (start) => set(() => ({ barChartStart: start })),

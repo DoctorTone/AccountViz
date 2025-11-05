@@ -39,7 +39,7 @@ const Options = () => {
       },
     },
     Distance: {
-      value: 4,
+      value: BAR_CHART.DISTANCE,
       min: 1,
       max: 8,
       step: 1,
