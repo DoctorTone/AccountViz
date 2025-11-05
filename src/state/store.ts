@@ -1,6 +1,12 @@
 import { create } from "zustand";
 import Papa from "papaparse";
-import { type VizType, MONTHS, type DataRow, COLOURS } from "./Config";
+import {
+  type VizType,
+  MONTHS,
+  type DataRow,
+  COLOURS,
+  BAR_CHART,
+} from "./Config";
 import { sortMonthlyData } from "../utils/Utils";
 
 interface DataState {
@@ -144,7 +150,7 @@ const useStore = create<DataState>((set, get) => ({
   setOutColour: (colour) => set(() => ({ outgoingColour: colour })),
   setInColour: (colour) => set(() => ({ incomingColour: colour })),
   setVATColour: (colour) => set(() => ({ VATColour: colour })),
-  textScale: 1,
+  textScale: BAR_CHART.TEXT_SCALE,
   setTextScale: (scale) => set(() => ({ textScale: scale })),
   barChartGap: 4,
   setBarChartGap: (gap) => set(() => ({ barChartGap: gap })),

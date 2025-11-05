@@ -1,4 +1,5 @@
 import { useControls } from "leva";
+import { BAR_CHART } from "../state/Config";
 import useStore from "../state/store";
 
 const Options = () => {
@@ -29,7 +30,7 @@ const Options = () => {
       },
     },
     TextScale: {
-      value: 1,
+      value: BAR_CHART.TEXT_SCALE,
       min: 0.1,
       max: 2,
       step: 0.1,

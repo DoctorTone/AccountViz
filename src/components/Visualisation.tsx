@@ -90,13 +90,18 @@ const Visualisation = () => {
     return { monthlyData, maxIn, maxOut };
   }, [selectedMonths, vizType]);
 
+  // DEBUG
+  console.log("Monthly = ", monthlyData);
+  monthlyData[0] = {
+    Incoming: [1, 0],
+  };
   return (
     <>
       {monthlyData.map((categoryTotal, index) => (
         <BarChart
           data={categoryTotal}
           config={{
-            offset: index % 2,
+            offset: Math.floor(index / 2),
             maxValue: maxIn,
             minValue: maxOut,
             invertY: true,
