@@ -51,6 +51,10 @@ export type DataRow = {
   category: Expenses;
 };
 
+export type DataNumber = {
+  [key: string]: number[];
+};
+
 export const ExpensesList = [
   "Misc",
   "Accountants",

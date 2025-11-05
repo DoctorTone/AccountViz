@@ -1,7 +1,8 @@
 import { useMemo } from "react";
 import useStore from "../state/store";
 import { BarChart } from "./BarChart";
-import { ExpensesList } from "../state/Config";
+import { ExpensesList, type DataNumber } from "../state/Config";
+import { getMaxInMaxOut } from "../utils/Utils";
 
 const Visualisation = () => {
   const currentSelection = useStore((state) => state.currentSelection);
@@ -12,8 +13,8 @@ const Visualisation = () => {
     return null;
   }
 
-  const monthlyData = useMemo(() => {
-    const filterData = (rows) => {
+  const { monthlyData, maxIn, maxOut } = useMemo(() => {
+    const calculateTotals = (rows) => {
       switch (vizType) {
         case "Incomings":
           {
@@ -65,19 +66,42 @@ const Visualisation = () => {
           break;
       }
     };
-    let monthlyData = [];
+
+    const filterTotals = (monthlyTotals: DataNumber) => {
+      const totalsOut = Object.fromEntries(
+        Object.entries(monthlyTotals).filter(([_, [total, __]]) => total < -0.1)
+      );
+
+      const totalsIn = Object.fromEntries(
+        Object.entries(monthlyTotals).filter(([_, [total, __]]) => total > 0.1)
+      );
+
+      return { totalsIn, totalsOut };
+    };
+
+    let monthlyData: DataNumber[] = [];
     Object.entries(selectedMonths).map(([key, rows]) => {
-      const monthlyTotals = filterData(rows);
-      monthlyData.push(monthlyTotals);
+      const monthlyTotals = calculateTotals(rows);
+      const { totalsIn, totalsOut } = filterTotals(monthlyTotals);
+      monthlyData.push(totalsIn, totalsOut);
     });
 
-    return monthlyData;
+    const [maxIn, maxOut] = getMaxInMaxOut(monthlyData);
+    return { monthlyData, maxIn, maxOut };
   }, [selectedMonths, vizType]);
 
   return (
     <>
       {monthlyData.map((categoryTotal, index) => (
-        <BarChart data={categoryTotal} offset={index} />
+        <BarChart
+          data={categoryTotal}
+          config={{
+            offset: index,
+            maxValue: maxIn,
+            minValue: maxOut,
+            invertY: true,
+          }}
+        />
       ))}
     </>
   );

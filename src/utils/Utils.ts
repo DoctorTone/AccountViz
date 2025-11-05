@@ -1,4 +1,4 @@
-import { MONTHS, type DataRow } from "../state/Config";
+import { MONTHS, type DataRow, type DataNumber } from "../state/Config";
 
 export const sortMonthlyData = (
   data: DataRow[]
@@ -28,4 +28,22 @@ export const sortMonthlyData = (
   outputData[currentMonthYear] = monthData;
 
   return outputData;
+};
+
+export const getMaxInMaxOut = (data: DataNumber[]) => {
+  let maxIn = 0;
+  let maxOut = 0;
+
+  for (let i = 0; i < data.length; ++i) {
+    Object.entries(data[i]).map(([_, [total, __]]) => {
+      if (total < maxOut) {
+        maxOut = total;
+      }
+      if (total > maxIn) {
+        maxIn = total;
+      }
+    });
+  }
+
+  return [maxIn, maxOut];
 };
