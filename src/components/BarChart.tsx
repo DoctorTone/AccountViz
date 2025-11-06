@@ -27,8 +27,6 @@ export const BarChart = ({ data, config }: BarChartProps) => {
   return (
     <>
       {Object.entries(data).map(([key, [total, vat]], index) => {
-        // DEBUG
-        console.log("Offset = ", config.offset);
         let start = barChartStart;
         let gap = barChartGap;
         let colour = inColour;

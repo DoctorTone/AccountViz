@@ -27,22 +27,22 @@ const DataDialog = () => {
   const saveSelectedRows = useStore((state) => state.saveSelectedRows);
 
   const handleClose = () => {
-    // DEBUG
-    // if (!selection) {
-    //   // DEBUG
-    //   console.log("No data selected!");
-    //   return;
-    // }
-    // setDataLoaded(false);
-    // const selected = Array.from(selection.ids);
-    // const selectedRows = rows.filter((row) => selected!.includes(row.id));
-    // // DEBUG
-    // console.log("Selected = ", selectedRows);
-    // saveSelectedRows(selectedRows);
-
-    // Dummy data
+    // DEBUG - load dummy data
+    if (!selection) {
+      // DEBUG
+      console.log("No data selected!");
+      return;
+    }
     setDataLoaded(false);
-    saveSelectedRows(dummyData);
+    const selected = Array.from(selection.ids);
+    const selectedRows = rows.filter((row) => selected!.includes(row.id));
+    // DEBUG
+    console.log("Selected = ", selectedRows);
+    saveSelectedRows(selectedRows);
+
+    // DEBUG - Dummy data
+    // setDataLoaded(false);
+    // saveSelectedRows(dummyData);
   };
 
   const CustomTypeEditComponent = (params: GridEditSingleSelectCellProps) => {

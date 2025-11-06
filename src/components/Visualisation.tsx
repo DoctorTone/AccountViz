@@ -1,20 +1,21 @@
 import { useMemo } from "react";
 import useStore from "../state/store";
 import { BarChart } from "./BarChart";
-import { ExpensesList, type DataNumber } from "../state/Config";
+import { ExpensesList, type DataNumber, type DataRow } from "../state/Config";
 import { getMaxInMaxOut } from "../utils/Utils";
 
 const Visualisation = () => {
   const currentSelection = useStore((state) => state.currentSelection);
   const selectedMonths = useStore((state) => state.selectedMonths);
   const vizType = useStore((state) => state.vizType);
+  const showAllData = useStore((state) => state.showAllData);
 
   if (!currentSelection.length) {
     return null;
   }
 
   const { monthlyData, maxIn, maxOut } = useMemo(() => {
-    const calculateTotals = (rows) => {
+    const calculateTotals = (rows: DataRow[]) => {
       switch (vizType) {
         case "Incomings":
           {
@@ -80,15 +81,22 @@ const Visualisation = () => {
     };
 
     let monthlyData: DataNumber[] = [];
-    Object.entries(selectedMonths).map(([key, rows]) => {
-      const monthlyTotals = calculateTotals(rows);
+    if (showAllData) {
+      Object.entries(selectedMonths).map(([key, rows]) => {
+        const monthlyTotals = calculateTotals(rows);
+        const { totalsIn, totalsOut } = filterTotals(monthlyTotals);
+        monthlyData.push(totalsIn, totalsOut);
+      });
+    } else {
+      const monthlyTotals = calculateTotals(currentSelection);
       const { totalsIn, totalsOut } = filterTotals(monthlyTotals);
       monthlyData.push(totalsIn, totalsOut);
-    });
+    }
 
     const [maxIn, maxOut] = getMaxInMaxOut(monthlyData);
+
     return { monthlyData, maxIn, maxOut };
-  }, [selectedMonths, vizType]);
+  }, [selectedMonths, currentSelection, vizType, showAllData]);
 
   return (
     <>

@@ -31,6 +31,8 @@ interface DataState {
   currentSelection: DataRow[];
   vizType: VizType;
   setVisualisationType: (vizType: VizType) => void;
+  showAllData: boolean;
+  setShowAllData: (status: boolean) => void;
   // Colours
   outgoingColour: string;
   incomingColour: string;
@@ -47,9 +49,11 @@ interface DataState {
 }
 
 const useStore = create<DataState>((set, get) => ({
-  // DEBUG
-  showDropZone: false,
-  dataLoaded: true,
+  // DEBUG - load dummy data
+  // showDropZone: false,
+  // dataLoaded: true,
+  showDropZone: true,
+  dataLoaded: false,
 
   setDataLoaded: (status) => set({ dataLoaded: status }),
   rows: [],
@@ -59,6 +63,8 @@ const useStore = create<DataState>((set, get) => ({
   currentYear: null,
   currentSelection: [],
   currentPeriod: "No data",
+  showAllData: false,
+  setShowAllData: (status) => set(() => ({ showAllData: status })),
   loadCSVFile: (file) => {
     Papa.parse<string[]>(file, {
       skipEmptyLines: true,
